@@ -1,0 +1,26 @@
+.nav {
+    /*grid-area: n;*/
+    /*background-color: burlywood;*/
+    /*padding: 20px;*/
+
+    background-color: #13CE66;
+    width: 264px;
+    height: 904px;
+}
+
+.item a {
+    /*color: white;*/
+    /*text-decoration: none;*/
+
+    color: #FFFFFF;
+    line-height: 44px;
+    width: 227px;
+    text-align: left;
+    margin-top: 109px;
+    margin-left: 34px;
+    margin-right: 1142px;
+}
+
+.item a.activeLink {
+    color: gold;
+}

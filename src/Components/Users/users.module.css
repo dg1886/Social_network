@@ -1,0 +1,18 @@
+.userPhoto {
+    width: 50px;
+    height: 50px;
+}
+
+.selectedPage {
+    font-weight: bold;
+}
+
+.pageNumbers {
+    cursor: pointer;
+    margin: 10px 20px;
+}
+.preloader {
+    position: absolute;
+    top: 275px;
+    left: 700px;
+}
