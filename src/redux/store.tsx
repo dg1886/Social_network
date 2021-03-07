@@ -8,7 +8,7 @@ export type MessageType = {
     message: string
 }
 export type PostType = {
-    id: number
+    id: string
     message: string
     likesCount: number
 }
@@ -32,7 +32,6 @@ export type UsersType = {
 export type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
-
 }
 export type UsersPageType = {
     users: Array<UsersType>
@@ -74,8 +73,8 @@ let store: StoreType = {
     _state: {
         profilePage: {
             posts: [
-                {id: 1, message: 'Hi, how are you?', likesCount: 13},
-                {id: 2, message: "It's my first post", likesCount: 12}
+                {id: '1', message: 'Hi, how are you?', likesCount: 13},
+                {id: '2', message: "It's my first post", likesCount: 12}
             ],
             newPostText: ''
         },
@@ -110,7 +109,7 @@ let store: StoreType = {
     },
 
     dispatch(action ) {
-        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        // this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.messagesPage = dialogsReducer(this._state.messagesPage, action)
         this._callSubscriber(this._state)
     },
