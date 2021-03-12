@@ -7,6 +7,7 @@ const ProfileInfo = (props: any) => {
     if(!props.profile) {
         return <Preloader/>
     }
+    console.log(props.profile.contacts)
     return (
         <div>
             <div>
@@ -14,9 +15,11 @@ const ProfileInfo = (props: any) => {
             </div>
             <div className = {s.descriptionBlock}>
                 <img src={props.profile.photos.large} alt="User photo"/>
+                <div>User name: {props.profile.fullName}</div>
+                <div>{props.profile.lookingForAJob}</div>
+                <div>{props.profile.lookingForAJobDescription}</div>
                 ava + description
             </div>
-
         </div>
     )
 }

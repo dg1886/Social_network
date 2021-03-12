@@ -2,12 +2,64 @@ import React from "react";
 import Profile from "../Profile";
 import axios from "axios";
 import {connect} from "react-redux";
-import {ProfilePageType, ProfileType, setUserProfileActionCreator} from "../../../redux/profile-reducer";
+import {ProfileType, setUserProfileActionCreator} from "../../../redux/profile-reducer";
 import {rootAppStateType} from "../../../redux/redux-store";
 import {PostType} from "../../../redux/store";
+import {RouteComponentProps, withRouter } from "react-router-dom";
 
 
 type Own = {}
+
+type MatchParamsType = {
+    userId: string
+}
+type MapDispatchType = {
+    setUserProfileActionCreator: (profile: Array<ProfileType>) => void
+}
+
+type MapStateToPropsType = {
+    posts: Array<PostType>
+    text: string
+    profile: Array<ProfileType> | null
+}
+type ProfileContainerPropsType = {
+    setUserProfileActionCreator: (profile: Array<ProfileType>) => void
+}
+type PropsType = RouteComponentProps <MatchParamsType> & MapStateToPropsType & MapDispatchType & ProfileContainerPropsType
+
+class ProfileContainer extends React.Component<PropsType> {
+    componentDidMount() {
+    let userId = this.props.match.params.userId
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId )
+            .then(response => {
+                this.props.setUserProfileActionCreator(response.data)
+            })
+    }
+
+    render() {
+        return (
+            <Profile {...this.props} profile={this.props.profile}/>
+        )
+
+    }
+}
+
+
+
+let mapStateToProps = (state: rootAppStateType): MapStateToPropsType => ({
+    profile: state.profilePage.profile,
+    posts: state.profilePage.posts,
+    text: state.profilePage.newPostText,
+})
+
+let WithUrlDataContainerComponent = withRouter(ProfileContainer)
+
+export default connect<MapStateToPropsType, MapDispatchType, Own, rootAppStateType>(mapStateToProps, {setUserProfileActionCreator})(WithUrlDataContainerComponent)
+
+
+
+
+
 // type UsersContactsType = {
 //     github: string
 //     vk: string
@@ -26,48 +78,6 @@ type Own = {}
 //     contacts: Array<UsersContactsType>
 //     photos: any
 // }
-type ProfileContainerPropsType = {
-    profile: Array<ProfileType> | null
-    setUserProfileActionCreator: (profile: Array<ProfileType>) => void
-}
-
-class ProfileContainer extends React.Component<ProfileContainerPropsType> {
-    componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
-            .then(response => {
-                this.props.setUserProfileActionCreator(response.data)
-            })
-    }
-
-    render() {
-        return (
-            <Profile {...this.props} profile={this.props.profile}/>
-        )
-
-    }
-}
-
-type MapDispatchType = {
-    setUserProfileActionCreator: (profile: Array<ProfileType>) => void
-}
-type MapStateToProps = {
-    posts: Array<PostType>
-    text: string
-    profile: Array<ProfileType> | null
-}
-let mapStateToProps = (state: rootAppStateType): MapStateToProps => ({
-    profile: state.profilePage.profile,
-    posts: state.profilePage.posts,
-    text: state.profilePage.newPostText,
-})
-
-export default connect<MapStateToProps, MapDispatchType, Own, rootAppStateType>(mapStateToProps, {setUserProfileActionCreator})(ProfileContainer)
-
-
-
-
-
-
 
 
 
