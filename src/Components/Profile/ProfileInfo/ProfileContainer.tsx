@@ -40,7 +40,6 @@ class ProfileContainer extends React.Component<PropsType> {
         return (
             <Profile {...this.props} profile={this.props.profile}/>
         )
-
     }
 }
 

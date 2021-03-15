@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import Header from './Components/Header/Header';
 import Navbar from './Components/Navbar/Navbar';
 import {BrowserRouter, Route} from 'react-router-dom';
 import {StateActionsTypes, StateType} from './redux/store';
@@ -8,6 +7,7 @@ import {StoreReduxType} from "./redux/redux-store";
 import DialogsContainer from "./Components/Dialogs/DialogsContainer";
 import UsersContainer from "./Components/Users/UsersContainer";
 import ProfileContainer from "./Components/Profile/ProfileInfo/ProfileContainer";
+import HeaderContainer from "./Components/Header/HeaderContainer";
 
 
 export type AppType = {
@@ -23,7 +23,7 @@ const App = () => {
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
-                <Header/>
+                <HeaderContainer/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Route path='/dialogs' render={ () => <DialogsContainer/>}/>
