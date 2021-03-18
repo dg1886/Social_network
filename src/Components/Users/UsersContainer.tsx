@@ -4,11 +4,10 @@ import {rootAppStateType} from "../../redux/redux-store";
 import {
     follow,
     setCurrentPage, setToggleIsFetching,
-    setUsers, setUsersTotalCount,
+    setUsers, setUsersTotalCount, toggleFollowingProgress,
     unfollow
 } from "../../redux/users-reducer";
-import {UsersType} from "../../redux/store";
-import axios from "axios";
+import {followingInProgressType, UsersType} from "../../redux/store";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
 import {usersAPI} from "../../api/api";
@@ -26,6 +25,8 @@ export type UsersContainerPropsType = {
     setCurrentPage: (pageNumber: number) => void
     setUsersTotalCount: (totalUsersCount: number) => void
     setToggleIsFetching: (isFetching: boolean) => void
+    followingInProgress: Array<followingInProgressType>
+    toggleFollowingProgress: (isFetching: boolean, userId: number) => void
 }
 
 class UsersContainer extends React.Component<UsersContainerPropsType> {
@@ -61,6 +62,8 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
             pageSize={this.props.pageSize}
             totalUsersCount={this.props.totalUsersCount}
             unfollow={this.props.unfollow}
+            toggleFollowingProgress={this.props.toggleFollowingProgress}
+            followingInProgress={this.props.followingInProgress}
         />
         </>
     }
@@ -72,12 +75,13 @@ let mapStateToProps = (state: rootAppStateType) => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
 export default connect(mapStateToProps, {follow, unfollow, setUsers,
-    setCurrentPage, setUsersTotalCount, setToggleIsFetching} ) (UsersContainer)
+    setCurrentPage, setUsersTotalCount, setToggleIsFetching, toggleFollowingProgress} ) (UsersContainer)
 
 
 

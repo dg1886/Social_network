@@ -33,12 +33,19 @@ export type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
 }
+export type followingInProgressType = {    //////
+    isFetching: boolean
+    userId: number
+}
+
 export type UsersPageType = {
     users: Array<UsersType>
     pageSize: number
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: Array<followingInProgressType>
+    toggleFollowingProgress: (isFetching: boolean, userId: number) => void
 }
 
 export type MessagePageType = {
