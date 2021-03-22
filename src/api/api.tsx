@@ -13,6 +13,12 @@ export const usersAPI = {
             .then(responce => {
                 return responce.data
             })
+    },
+    follow(userId: number) {
+        return instance.post(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {})
+    },
+    unfollow(userId: number) {
+        return instance.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`)
     }
 }
 
