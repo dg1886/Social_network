@@ -1,4 +1,6 @@
 import {PostType, StateActionsTypes} from "./store";
+import {Dispatch} from "redux";
+import {usersAPI} from "../api/api";
 
 type PhotosType = {
     small: string
@@ -15,7 +17,7 @@ type UsersContactsType = {
     mainLink: string
 }
 export type ProfileType = {
-    userId: number
+    userId: string  //number
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
@@ -64,7 +66,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: StateActi
             stateCopy.posts = [...state.posts]
             stateCopy.posts.push(newPost)
             stateCopy.newPostText = '';   ///зануление
-  debugger
+
             return stateCopy
         }
 
@@ -104,6 +106,12 @@ export const updateNewPostTextActionCreator = (newText: string) => {
         type: UPDATE_NEW_POST_TEXT,
         newText: newText
     } as const
+}
+
+export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
+    usersAPI.getProfile( Number(userId)).then(response => {
+        dispatch(setUserProfileActionCreator(response.data))
+    })
 }
 
 export default profileReducer

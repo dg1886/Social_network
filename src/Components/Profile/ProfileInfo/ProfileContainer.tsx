@@ -2,19 +2,20 @@ import React from "react";
 import Profile from "../Profile";
 import axios from "axios";
 import {connect} from "react-redux";
-import {ProfileType, setUserProfileActionCreator} from "../../../redux/profile-reducer";
+import {getUserProfile, ProfileType, setUserProfileActionCreator} from "../../../redux/profile-reducer";
 import {rootAppStateType} from "../../../redux/redux-store";
 import {PostType} from "../../../redux/store";
 import {RouteComponentProps, withRouter } from "react-router-dom";
 
 
+
 type Own = {}
 
 type MatchParamsType = {
-    userId: string
+    userId: string   // string
 }
 type MapDispatchType = {
-    setUserProfileActionCreator: (profile: Array<ProfileType>) => void
+    getUserProfile: (userId: number) => void
 }
 
 type MapStateToPropsType = {
@@ -22,18 +23,19 @@ type MapStateToPropsType = {
     text: string
     profile: Array<ProfileType> | null
 }
-type ProfileContainerPropsType = {
-    setUserProfileActionCreator: (profile: Array<ProfileType>) => void
-}
-type PropsType = RouteComponentProps <MatchParamsType> & MapStateToPropsType & MapDispatchType & ProfileContainerPropsType
+// type ProfileContainerPropsType = {
+//     // setUserProfileActionCreator: (profile: Array<ProfileType>) => void
+//     getUserProfile: (userId: number) => void
+// }
+type PropsType = RouteComponentProps <MatchParamsType> & MapStateToPropsType & MapDispatchType
 
 class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
-    let userId = this.props.match.params.userId
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId )
-            .then(response => {
-                this.props.setUserProfileActionCreator(response.data)
-            })
+    let userId: string | number = this.props.match.params.userId
+       if (!userId) {
+           userId = 2
+       }
+        this.props.getUserProfile(Number(userId))
     }
 
     render() {
@@ -53,7 +55,7 @@ let mapStateToProps = (state: rootAppStateType): MapStateToPropsType => ({
 
 let WithUrlDataContainerComponent = withRouter(ProfileContainer)
 
-export default connect<MapStateToPropsType, MapDispatchType, Own, rootAppStateType>(mapStateToProps, {setUserProfileActionCreator})(WithUrlDataContainerComponent)
+export default connect<MapStateToPropsType, MapDispatchType, Own, rootAppStateType>(mapStateToProps, {getUserProfile})(WithUrlDataContainerComponent)
 
 
 
