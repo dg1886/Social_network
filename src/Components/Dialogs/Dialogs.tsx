@@ -3,18 +3,18 @@ import s from './Dialogs.module.css'
 // import { NavLink } from 'react-router-dom';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import store, {StoreReduxType} from "../../redux/redux-store";
+import store, {rootAppStateType, StoreReduxType} from "../../redux/redux-store";
+import { Redirect } from "react-router-dom";
 
 
 type DialogsPropsType = {
     updateNewMessageBody: (body: string) => void
     SendMessage: () => void
-    // messagePage: MessagePageType
-    store: StoreReduxType
+    isAuth: boolean
 }
 
 
-const Dialogs = (props:any) => {
+const Dialogs = (props: DialogsPropsType) => {
 
     // props.store.dispatch(sendMessageCreator())
 
@@ -26,13 +26,11 @@ const Dialogs = (props:any) => {
     let newMessageBody = store.getState().messagesPage.newMessageBody
 
     let onSendMessageClick = () => {
-        // props.store.dispatch(sendMessageCreator())
         props.SendMessage()
     }
 
     let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.updateNewMessageBody(e.currentTarget.value)
-        // props.store.dispatch(updateNewMessageBodyCreator(body))
     }
 
     let onKeyPressHandler = (event: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -40,6 +38,8 @@ const Dialogs = (props:any) => {
             props.SendMessage();
         }
     }
+
+    if(props.isAuth === false) return <Redirect to = {'/login'}/>
 
     return (
         <div className={s.dialogs}>

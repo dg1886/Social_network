@@ -1,8 +1,8 @@
 
 import {MessagePageType, StateActionsTypes} from "./store";
 
-export const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';  //имя экшена
-export const SEND_MESSAGE = 'SEND-MESSAGE';  //имя экшена
+export const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
+export const SEND_MESSAGE = 'SEND-MESSAGE';
 
 export type DialogsActionsTypes =  ReturnType<typeof updateNewMessageBodyCreator> | ReturnType<typeof sendMessageCreator>
 
