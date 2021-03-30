@@ -3,8 +3,8 @@ import {sendMessageCreator, updateNewMessageBodyCreator} from "../../redux/dialo
 import store, {rootAppStateType} from "../../redux/redux-store";
 import Dialogs from "./Dialogs";
 import { connect } from "react-redux";
-import {Redirect} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 // type DialogsPropsType = {
 //     store: StoreReduxType | null
@@ -28,60 +28,23 @@ return {
     }
 }
 }
-let AuthRedirectComponent = withAuthRedirect(Dialogs)
 
-let DialogsContainer = connect(mapStateToProps, mapDispatchToProps) (AuthRedirectComponent)
+compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect,
 
-export default DialogsContainer
+)(Dialogs)
 
-
-// const DialogsContainer = (props: any) => {
+// let AuthRedirectComponent = withAuthRedirect(Dialogs)
 //
-//
-//     return (
-//         <StoreContext.Consumer>
-//             {(store: any) => {
-//                 let onSendMessageClick = () => {
-//                     store.dispatch(sendMessageCreator())
-//                 }
-//                 let onNewMessageChange = (body: string) => {
-//                     store.dispatch(updateNewMessageBodyCreator(body))
-//                 }
-//
-//                 return <Dialogs
-//                     updateNewMessageBody={onNewMessageChange}
-//                     SendMessage={onSendMessageClick}
-//                     // store={props.store}
-//                 />
-//             }
-//             }
-//         </StoreContext.Consumer>
-//     )
-// }
+// let DialogsContainer = connect(mapStateToProps, mapDispatchToProps) (AuthRedirectComponent)
 
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect,
 
+)(Dialogs)
 
-/*type DialogsPropsType = {
-    store: StoreReduxType
-}
-
-
-const DialogsContainer = (props: DialogsPropsType) => {
-
-    let onSendMessageClick = () => {
-        props.store.dispatch(sendMessageCreator())
-    }
-    let onNewMessageChange = (body: string) => {
-        props.store.dispatch(updateNewMessageBodyCreator(body))
-    }
-
-    return (
-        <Dialogs updateNewMessageBody={onNewMessageChange}
-                 SendMessage={onSendMessageClick}
-                 store={props.store}
-        />
-    )
-}*/
 
 
 

@@ -3,8 +3,6 @@ import styles from "./users.module.css";
 import userPhoto from "../../img/ava/usersAva.jpg";
 import {followingInProgressType, UsersType} from "../../redux/store";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
-import {usersAPI} from "../../api/api";
 
 export type UsersPropsType = {
     users: Array<UsersType>

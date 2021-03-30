@@ -3,15 +3,13 @@ import {connect} from "react-redux";
 import {rootAppStateType} from "../../redux/redux-store";
 import {
     follow,
-    followSuccess, getUsers,
-    setCurrentPage, setToggleIsFetching,
-    setUsers, setUsersTotalCount, toggleFollowingProgress, unfollow,
-    unfollowSuccess
+    getUsers,
+    setCurrentPage, toggleFollowingProgress, unfollow
 } from "../../redux/users-reducer";
 import {followingInProgressType, UsersType} from "../../redux/store";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
-import {usersAPI} from "../../api/api";
+import {compose} from "redux";
 
 export type UsersContainerPropsType = {
     users: Array<UsersType>
@@ -68,6 +66,8 @@ let mapStateToProps = (state: rootAppStateType) => {
         followingInProgress: state.usersPage.followingInProgress
     }
 }
+
+compose()(UsersContainer)
 
 export default connect(mapStateToProps, {follow, unfollow,
     setCurrentPage, toggleFollowingProgress, getUsers} ) (UsersContainer)

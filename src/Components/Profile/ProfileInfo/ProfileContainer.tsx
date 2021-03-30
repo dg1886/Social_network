@@ -6,6 +6,7 @@ import {rootAppStateType} from "../../../redux/redux-store";
 import {PostType} from "../../../redux/store";
 import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 
 
@@ -49,7 +50,7 @@ class ProfileContainer extends React.Component<PropsType> {
         )
     }
 }
-let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
+
 
 
 let mapStateToProps = (state: rootAppStateType) => ({
@@ -59,12 +60,20 @@ let mapStateToProps = (state: rootAppStateType) => ({
     // isAuth: state.auth.isAuth
 })
 
-let WithUrlDataContainerComponent = withRouter(AuthRedirectComponent)
+export default compose<React.ComponentType>(
+    connect<MapStateToPropsType, MapDispatchType, Own, rootAppStateType>(mapStateToProps, {getUserProfile}),
+    withRouter,
+    // withAuthRedirect  //редиректит на Login
+)(ProfileContainer)
 
-export default connect<MapStateToPropsType, MapDispatchType, Own, rootAppStateType>(mapStateToProps, {getUserProfile})(WithUrlDataContainerComponent)
 
 
 
+
+// let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
+// let WithUrlDataContainerComponent = withRouter(AuthRedirectComponent)
+//
+// export default connect<MapStateToPropsType, MapDispatchType, Own, rootAppStateType>(mapStateToProps, {getUserProfile})(WithUrlDataContainerComponent)
 
 
 // type UsersContactsType = {
