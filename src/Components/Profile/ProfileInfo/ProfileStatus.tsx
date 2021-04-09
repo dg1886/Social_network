@@ -29,21 +29,21 @@ class ProfileStatus extends React.Component<ProfileStatusType> {
             status: e.currentTarget.value
         })
     }
-    // componentDidUpdate(prevProps: Readonly<ProfileStatusType>, prevState: Readonly<{}>, snapshot?: any) {
-    //     if(prevProps.status !== this.props.status) {
-    //         this.setState({
-    //             status:this.props.status
-    //         })
-    //     }
-    // }
+    componentDidUpdate(prevProps: Readonly<ProfileStatusType>, prevState: Readonly<{}>) {
+        if(prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
+    }
 
     render() {
         return (
         <>
             {!this.state.editMode &&
             <div>
-                {this.props.status !== '' ? <span onDoubleClick={this.activateEditMode}>{this.props.status}</span> : <span onDoubleClick={this.activateEditMode}>{'not status'}</span> }
-
+                {/*{this.props.status !== '' ? <span onDoubleClick={this.activateEditMode}>{this.props.status}</span> : <span onDoubleClick={this.activateEditMode}>{'not status'}</span> }*/}
+                <span onDoubleClick={this.activateEditMode}>{this.props.status || 'No status'}</span>
             </div>
             }
             {this.state.editMode &&
