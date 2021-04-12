@@ -22,7 +22,7 @@ type MapDispatchType = {
 
 type MapStateToPropsType = {
     posts: Array<PostType>
-    text: string
+
     profile: Array<ProfileType> | null
     status: string
     // isAuth: boolean
@@ -62,7 +62,6 @@ class ProfileContainer extends React.Component<PropsType> {
 let mapStateToProps = (state: rootAppStateType) => ({
     profile: state.profilePage.profile,
     posts: state.profilePage.posts,
-    text: state.profilePage.newPostText,
     status: state.profilePage.status
     // isAuth: state.auth.isAuth
 })

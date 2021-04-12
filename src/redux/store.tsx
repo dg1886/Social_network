@@ -51,7 +51,7 @@ export type UsersPageType = {
 export type MessagePageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
-    newMessageBody: string
+    // newMessageBody: string
 }
 
 
@@ -100,7 +100,7 @@ let store: StoreType = {
                 {id: 2, message: 'All Cops Are Bastards'},
                 {id: 3, message: 'Yo nigga!'}
             ],
-            newMessageBody: ''
+            // newMessageBody: ''
         }
 
     },

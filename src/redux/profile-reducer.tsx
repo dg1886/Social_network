@@ -27,7 +27,7 @@ export type ProfileType = {
 
 export type ProfilePageType = {
     posts: Array<PostType>
-    newPostText: string
+
     profile: Array<ProfileType> | null
     status: string
 }
@@ -35,12 +35,10 @@ export type ProfilePageType = {
 export type ProfileActionsTypes =
     ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof setUserProfileActionCreator>
-    | ReturnType<typeof updateNewPostTextActionCreator>
     | ReturnType<typeof setStatusActionCreator>
 
 
 export const ADD_POST = 'ADD-POST';
-export const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 export const SET_USER_PROFILE = 'SET-USER-PROFILE';
 export const SET_STATUS = 'SET-STATUS';
 
@@ -50,7 +48,6 @@ let initialState = {
         {id: Date.now().toString(), message: 'i', likesCount: 0},
         {id: Date.now().toString(), message: 'lol', likesCount: 0}
     ],
-    newPostText: '',
     profile: null,
     status: ''
 }
@@ -62,25 +59,18 @@ const profileReducer = (state: ProfilePageType = initialState, action: StateActi
         case ADD_POST: {
             let newPost: PostType = {
                 id: Date.now().toString(),
-                message: state.newPostText = action.newPostText,
+                message: action.newPostText,
                 likesCount: 0
             }
 
             let stateCopy = {...state}
             stateCopy.posts = [...state.posts]
             stateCopy.posts.push(newPost)
-            stateCopy.newPostText = '';   ///зануление
+            // stateCopy.newPostText = '';   зануление
 
             return stateCopy
         }
 
-
-        case UPDATE_NEW_POST_TEXT: {
-            return {
-                ...state,
-                newPostText: action.newText
-            }
-        }
 
         case SET_USER_PROFILE: {
             return {...state, profile: action.profile}
@@ -101,7 +91,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: StateActi
 export const addPostActionCreator = (newPostText: string) => {
     return {
         type: ADD_POST,
-        newPostText: newPostText
+        newPostText
     } as const
 }
 
@@ -119,12 +109,6 @@ export const setStatusActionCreator = (status: string) => {
     } as const
 }
 
-export const updateNewPostTextActionCreator = (newText: string) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText: newText
-    } as const
-}
 
 export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
     usersAPI.getProfile( Number(userId)).then(response => {

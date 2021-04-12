@@ -1,20 +1,27 @@
 import React from "react";
+import {InjectedFormProps, reduxForm} from "redux-form";
+import {Field} from "redux-form";
 
+export type FormDataType = {
+    login: string
+    password: string
+    rememberMe: boolean
+}
 
-const LoginForm = () => {
+const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
     return (
-        <form>
+        <form onSubmit={props.handleSubmit}>
             <div>
-                <input placeholder={'Login'}/>
+                <Field placeholder={'Login'} name={'login'} component={'input'}/>
             </div>
 
             <div>
-                <input placeholder={'Password'}/>
+                <Field placeholder={'Password'} name={'password'} component={'input'}/>
             </div>
 
             <div>
-                <input type={'checkbox'}/>
+                <Field type={'checkbox'} name={'rememberMe'} component={'input'}/>
             </div>
 
             <div>
@@ -23,4 +30,10 @@ const LoginForm = () => {
         </form>
     )
 }
-export default LoginForm
+
+const LoginReduxForm = reduxForm<FormDataType>({
+    // a unique name for the form
+    form: 'login'
+})(LoginForm)
+
+export default LoginReduxForm
