@@ -7,6 +7,20 @@ const instance = axios.create({
 
 })
 
+type LoginType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    resultCode: number
+}
+type LogoutType = {
+    id: number | null
+    email: string | null
+    login: string | null
+    isAuth: boolean
+    resultCode: number
+}
+
 export const usersAPI = {
     getUsers(currentPage: number, pageSize: number) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
@@ -46,7 +60,14 @@ export const profileAPI = {
 }
 
 export const authAPI = {
-me() {return instance.get(`auth/me`)}
+me() {return instance.get(`auth/me`)},
+
+login(email: string, password: string, rememberMe: boolean = false) {
+    return instance.post<LoginType>(`auth/login`, {email, password, rememberMe})
+},
+    logout() {
+    return instance.delete<LogoutType>(`auth/login`)
+    }
 }
 
 
