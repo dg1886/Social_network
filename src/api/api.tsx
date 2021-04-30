@@ -12,6 +12,7 @@ type LoginType = {
     password: string
     rememberMe: boolean
     resultCode: number
+    messages: Array<string>
 }
 type LogoutType = {
     id: number | null

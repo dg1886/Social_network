@@ -1,9 +1,7 @@
 import React from "react";
 import LoginReduxForm, {FormDataType} from "./LoginForm";
-import {Dispatch} from "redux";
 import {connect, useDispatch} from "react-redux";
 import {login} from "../../redux/auth-reducer";
-import {ThunkAction} from "redux-thunk";
 import {rootAppStateType} from "../../redux/redux-store";
 import {Redirect} from "react-router-dom";
 
