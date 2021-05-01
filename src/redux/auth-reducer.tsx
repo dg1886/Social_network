@@ -55,8 +55,10 @@ const authReducer = (state: AuthReducerType = initialState, action: authUsersAct
 export const setAuthUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean) =>
     ({type: SET_USER_DATA, payload: {id, email, login, isAuth}})
 
-export const getAuthUserData = () => (dispatch: any) => {
-    authAPI.me()
+export type setAuthUserDataActinType = ReturnType<typeof setAuthUserData>
+
+export const getAuthUserData = () => (dispatch: Dispatch<setAuthUserDataActinType>) => {
+    return authAPI.me()
         .then(response => {
             if (response.data.resultCode === 0) {
                 let {id, email, login, isAuth} = response.data.data
@@ -66,23 +68,22 @@ export const getAuthUserData = () => (dispatch: any) => {
 }
 
 
-
-export const login = (email: string, password: string, rememberMe: boolean, ):ThunkType => (dispatch: any ) => {
-        authAPI.login(email, password, rememberMe)
-            .then((res) => {
-                if (res.data.resultCode === 0) {
-                    dispatch(getAuthUserData())
-                } else {
-                    let message = res.data.messages.length > 0 ? res.data.messages : "Some error"
-                    dispatch(stopSubmit("login", {_error: message}))
-                }
-            })
+export const login = (email: string, password: string, rememberMe: boolean,): ThunkType => (dispatch: any) => {
+    authAPI.login(email, password, rememberMe)
+        .then((res) => {
+            if (res.data.resultCode === 0) {
+                dispatch(getAuthUserData())
+            } else {
+                let message = res.data.messages.length > 0 ? res.data.messages : "Some error"
+                dispatch(stopSubmit("login", {_error: message}))
+            }
+        })
 }
 
 export const logout = () => (dispatch: Dispatch) => {
     authAPI.logout()
-        .then( (res) => {
-            if(res.data.resultCode === 0) {
+        .then((res) => {
+            if (res.data.resultCode === 0) {
                 dispatch(setAuthUserData(null, null, null, false))
             }
         })

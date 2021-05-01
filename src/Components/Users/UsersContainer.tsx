@@ -67,8 +67,9 @@ let mapStateToProps = (state: rootAppStateType) => {
     }
 }
 
-compose()(UsersContainer)
 
-export default connect(mapStateToProps, {follow, unfollow,
-    setCurrentPage, toggleFollowingProgress, getUsers} ) (UsersContainer)
 
+export default compose (
+    connect(mapStateToProps, {follow, unfollow,
+        setCurrentPage, toggleFollowingProgress, getUsers} ) (UsersContainer)
+)
