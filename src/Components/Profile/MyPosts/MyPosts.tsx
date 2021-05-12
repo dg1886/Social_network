@@ -20,7 +20,7 @@ type AddNewPostDataType = {
 
 
 
-const MyPosts = (props: propsPostType) => {
+const MyPosts = React.memo((props: propsPostType) => {
 
     let postsElements =
         // props.profilePage.posts.map( p => <Post message={p.message} likesCount={p.likesCount}/>);
@@ -42,12 +42,12 @@ const MyPosts = (props: propsPostType) => {
             </div>
         </div>
     )
-}
+})
 
 
 const maxLength50 = maxLengthCreator(50)
 
-const AddNewPostForm:  React.FC<InjectedFormProps<AddNewPostDataType>> = (props) => {
+const AddNewPostForm:  React.FC<InjectedFormProps<AddNewPostDataType>> = React.memo((props) => {
 
     return (
         <form onSubmit={props.handleSubmit}>
@@ -59,7 +59,7 @@ const AddNewPostForm:  React.FC<InjectedFormProps<AddNewPostDataType>> = (props)
             </div>
         </form>
     )
-}
+})
 
 const AddNewPostFormRedux = reduxForm<AddNewPostDataType>({form: 'ProfileAddNewPostForm'}) (AddNewPostForm)
 
