@@ -127,22 +127,19 @@ export const deletePostActionCreator = (postId: string) => {
 }
 
 
-export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
-    usersAPI.getProfile( Number(userId)).then(response => {
+export const getUserProfile = (userId: number) => async (dispatch: Dispatch) => {
+    let response = await usersAPI.getProfile( Number(userId))
         dispatch(setUserProfileActionCreator(response.data))
-    })
 }
-export const getStatus = (userId: number) => (dispatch: Dispatch) => {
-    profileAPI.getStatus( Number(userId)).then(response => {
+export const getStatus = (userId: number) => async (dispatch: Dispatch) => {
+    let response = await profileAPI.getStatus( Number(userId))
         dispatch(setStatusActionCreator(response.data))
-    })
 }
-export const updateStatus = (status: string) => (dispatch: Dispatch) => {
-    profileAPI.updateStatus(status).then(response => {
+export const updateStatus = (status: string) => async (dispatch: Dispatch) => {
+    let response = await profileAPI.updateStatus(status)
         if(response.data.resultCode === 0) {
             dispatch(setStatusActionCreator(status))
         }
-    })
 }
 
 export default profileReducer

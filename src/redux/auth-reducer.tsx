@@ -27,7 +27,7 @@ export type AuthUserDataActionType = {
 export type authUsersActionsTypes =
     ReturnType<typeof setAuthUserData>
 
-export const SET_USER_DATA = 'SET-USER-DATA';
+export const SET_USER_DATA = 'auth/SET-USER-DATA';
 
 
 let initialState = {
@@ -57,7 +57,7 @@ export const setAuthUserData = (id: number | null, email: string | null, login: 
 
 export type setAuthUserDataActinType = ReturnType<typeof setAuthUserData>
 
-export const getAuthUserData = () => (dispatch: Dispatch<setAuthUserDataActinType>) => {
+/*export const getAuthUserData = () => (dispatch: Dispatch<setAuthUserDataActinType>) => {
     return authAPI.me()
         .then(response => {
             if (response.data.resultCode === 0) {
@@ -65,28 +65,30 @@ export const getAuthUserData = () => (dispatch: Dispatch<setAuthUserDataActinTyp
                 dispatch(setAuthUserData(id, email, login, true))
             }
         })
-}
+}*/
+export const getAuthUserData = () => async (dispatch: Dispatch<setAuthUserDataActinType>) => {
+    let response = await authAPI.me()
+            if (response.data.resultCode === 0) {
+                let {id, email, login} = response.data.data
+                dispatch(setAuthUserData(id, email, login, true))
+}}
 
 
-export const login = (email: string, password: string, rememberMe: boolean,): ThunkType => (dispatch: any) => {
-    authAPI.login(email, password, rememberMe)
-        .then((res) => {
-            if (res.data.resultCode === 0) {
+export const login = (email: string, password: string, rememberMe: boolean,): ThunkType => async (dispatch: any) => {
+    let responce = await authAPI.login(email, password, rememberMe)
+            if (responce.data.resultCode === 0) {
                 dispatch(getAuthUserData())
             } else {
-                let message = res.data.messages.length > 0 ? res.data.messages : "Some error"
+                let message = responce.data.messages.length > 0 ? responce.data.messages : "Some error"
                 dispatch(stopSubmit("login", {_error: message}))
             }
-        })
 }
 
-export const logout = () => (dispatch: Dispatch) => {
-    authAPI.logout()
-        .then((res) => {
-            if (res.data.resultCode === 0) {
+export const logout = () => async (dispatch: Dispatch) => {
+    let responce = await authAPI.logout()
+            if (responce.data.resultCode === 0) {
                 dispatch(setAuthUserData(null, null, null, false))
             }
-        })
 }
 
 export default authReducer

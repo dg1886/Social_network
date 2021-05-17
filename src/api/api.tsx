@@ -7,6 +7,21 @@ const instance = axios.create({
 
 })
 
+export enum ResultCodesEnum {
+    Success = 0,
+    Error = 1
+}
+export type APIResponseType<D = {}, RC = ResultCodesEnum> = {
+    data: D
+    messages: Array<string>
+    resultCode: RC
+}
+type MeResponseDataType = {
+    id: number
+    email: string
+    login: string
+}
+
 type LoginType = {
     email: string
     password: string
@@ -30,10 +45,10 @@ export const usersAPI = {
             })
     },
     follow(userId: number) {
-        return instance.post(`follow/${userId}`, {})
+        return instance.post<APIResponseType>(`follow/${userId}`).then(res => res.data)
     },
     unfollow(userId: number) {
-        return instance.delete(`follow/${userId}`)
+        return instance.delete(`follow/${userId}`).then(res => res.data) as Promise<APIResponseType>
     },
     getProfile(userId: number) {
         return profileAPI.getProfile(userId)
@@ -61,7 +76,7 @@ export const profileAPI = {
 }
 
 export const authAPI = {
-me() {return instance.get(`auth/me`)},
+me() {return instance.get<APIResponseType<MeResponseDataType>>(`auth/me`)},
 
 login(email: string, password: string, rememberMe: boolean = false) {
     return instance.post<LoginType>(`auth/login`, {email, password, rememberMe})
