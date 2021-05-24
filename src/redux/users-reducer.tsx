@@ -23,7 +23,7 @@ export const TOGGLE_IN_FOLLOWING_PROGRESS = 'TOGGLE-IN-FOLLOWING-PROGRESS';
 
 let initialState = {
     users: [] as Array<UsersType>,
-    pageSize: 5,
+    pageSize: 15,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,

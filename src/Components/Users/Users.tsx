@@ -1,18 +1,15 @@
 import React from "react";
-import styles from "./users.module.css";
-import userPhoto from "../../img/ava/usersAva.jpg";
 import {followingInProgressType, UsersType} from "../../redux/store";
-import {NavLink} from "react-router-dom";
 import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
-import {follow, unfollow} from "../../redux/users-reducer";
+
 
 export type UsersPropsType = {
     follow: (userId: number) => void
     unfollow: (userId: number) => void
     followingInProgress: Array<followingInProgressType>
 
-    totalUsersCount: number
+    totalItemsCount: number
     pageSize: number
     users: Array<UsersType>
     onPageChanged: (pageNumber: number) => void
@@ -27,7 +24,7 @@ export type UsersPropsType = {
 let Users = (props: UsersPropsType) => {
 
     return (<div>
-        <Paginator totalUsersCount={props.totalUsersCount}
+        <Paginator totalItemsCount={props.totalItemsCount}
                    pageSize={props.pageSize}
                    currentPage={props.currentPage}
                    onPageChanged={props.onPageChanged}/>
