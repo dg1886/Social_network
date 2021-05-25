@@ -4,17 +4,22 @@ import Navbar from './Components/Navbar/Navbar';
 import {BrowserRouter, Route, withRouter, RouteComponentProps} from 'react-router-dom';
 import {StateActionsTypes, StateType} from './redux/store';
 import {rootAppStateType, StoreReduxType} from "./redux/redux-store";
-import DialogsContainer from "./Components/Dialogs/DialogsContainer";
+// import DialogsContainer from "./Components/Dialogs/DialogsContainer";
 import UsersContainer from "./Components/Users/UsersContainer";
-import ProfileContainer from "./Components/Profile/ProfileInfo/ProfileContainer";
+// import ProfileContainer from "./Components/Profile/ProfileInfo/ProfileContainer";
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import Login from "./Components/Login/login";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./Components/common/Preloader/Preloader";
+import {withSuspense} from "./hoc/withSuspense";
 
 
+const DialogsContainer = React.lazy( () => import ("./Components/Dialogs/DialogsContainer"))
+const ProfileContainer = React.lazy( () => import ("./Components/Profile/ProfileInfo/ProfileContainer"))
+const SuspendedDialogs = withSuspense(DialogsContainer)
+const SuspendedProfile = withSuspense(ProfileContainer)
 
 export type AppType = {
     store: StoreReduxType
@@ -46,9 +51,9 @@ render() {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
-                    <Route path='/dialogs' render={() => <DialogsContainer/>}/>
+                    <Route path='/dialogs' render={ () => <SuspendedDialogs/>}/>
                     <Route path='/profile/:userId?'
-                           render={() => <ProfileContainer/>
+                           render={() => <SuspendedProfile/>
                            }/>
                     <Route path='/users' render={() => <UsersContainer/>}/>
 
