@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./users.module.css";
-import userPhoto from "../../img/ava/usersAva.jpg";
+import usersBlankPhoto from "../../img/ava/usersBlancAva.png";
 import {followingInProgressType, UsersType} from "../../redux/store";
 import {NavLink} from "react-router-dom";
 
@@ -30,7 +30,7 @@ let User = (props: UserPropsType) => {
 
     <div>
         <NavLink to={'/profile/' + props.user.id}>
-        <img src={user.photos.small != null ? user.photos.small : userPhoto} alt="User img"
+        <img src={user.photos.small != null ? user.photos.small : usersBlankPhoto} alt="User img"
              className={styles.userPhoto}/>
              </NavLink>
     </div>
